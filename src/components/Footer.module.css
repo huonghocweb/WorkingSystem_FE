@@ -1,0 +1,52 @@
+.footer {
+  background-color: #fff;
+  padding: 60px 0px;
+}
+
+/* Bỏ .footer phía trước để CSS Module nhận diện trực tiếp class .social */
+.social {
+  overflow: hidden;
+  text-align: right;
+}
+
+.social li {
+  margin: 0px 5px;
+  display: inline-block;
+}
+
+.social li a {
+  color: #fff;
+  background-color: #00b4c6;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 5px;
+  display: inline-block;
+  font-size: 16px;
+  transition: all 0.3s ease 0s;
+}
+
+.social li a:hover {
+  background-color: #0088e8;
+  color: #fff;
+}
+
+.copyright {
+  margin-top: 10px;
+  font-weight: 400;
+  font-size: 15px;
+  color: #4a4a4a;
+  letter-spacing: 0.88px;
+  text-transform: capitalize;
+}
+
+/* Media query cũng bỏ .footer phía trước */
+@media (max-width: 991px) {
+  .copyright {
+    text-align: center;
+  }
+  .social {
+    text-align: center;
+    margin-top: 15px;
+  }
+}
