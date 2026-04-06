@@ -14,7 +14,7 @@ initialData : PageResponse<UserResponse>;
 
 export default function UserList({initialData}: userListProps )  {
 
-    console.log(initialData)
+  //  console.log(initialData)
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();

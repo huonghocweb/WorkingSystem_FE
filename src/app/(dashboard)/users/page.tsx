@@ -1,5 +1,6 @@
 import UserListContainer from "@/src/features/user/components/UserListContainer";
 import { getUsers } from "@/src/features/user/services/user.server.service";
+import { showWToast } from "@/src/utils/notification";
 import { redirect } from 'next/navigation';
 
 interface UserPageProps { 
@@ -20,13 +21,13 @@ export default async function UserPage({searchParams}: UserPageProps)  {
     const by = params.by || 'userId';
     const order = params.order || 'ASC';
 
-    return (
-                 <div className="app-container">
-        {/* Main Content */}
-                <UserListContainer
-        initialData={userPage?.data}
-        />
-      
-        </div>
+        const  userPage = await getUsers(page, size , by , order);
+     //   console.log(userPage?.data);
+
+       return (
+                <div className="app-container">
+                    <UserListContainer
+                    initialData={userPage?.data} />
+               </div>
     )
 }
