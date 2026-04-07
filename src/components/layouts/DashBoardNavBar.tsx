@@ -1,4 +1,23 @@
+'use client'
+
+import { showWToast } from "@/src/utils/notification";
+import axios from "axios";
+import Link from "next/link";
+import { useRouter } from "next/navigation"
+
 export default function DashBoardNavBar() {  
+  const router = useRouter();
+  const handleLogout = async() => {
+    console.log('logouthandle')
+      const response = await axios.post("/api/auth/logout");
+      console.log('response  lougout:' , response);
+      if(response){
+        router.push('/');
+        router.refresh();
+      }else  { 
+        showWToast("error", "logout failed");
+      }
+  }
     return (
         <>
              {/* Top Navigation */}
@@ -33,10 +52,10 @@ export default function DashBoardNavBar() {
                   </a>
                 </div>
                 <div className="nav-item">
-                  <a href="/users" className="nav-link">
+                  <Link href="/users" className="nav-link">
                     <i className="fa-solid fa-users-gear"></i>
                     Users
-                  </a>
+                  </Link>
                 </div>
                 <div className="nav-item">
                   <a href="settings.html" className="nav-link">
@@ -59,9 +78,9 @@ export default function DashBoardNavBar() {
                 <div className="user-avatar">A</div>
                 <span className="user-name">Alex</span>
               </button>
-              <a href="login.html" className="btn-logout" title="Logout">
+              <button onClick={()=> handleLogout()} className="btn-logout" title="Logout">
                <i className="fa-solid fa-arrow-right-from-bracket"></i>
-              </a>
+              </button>
               {/* <button className="mobile-menu-btn">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <line x1="3" y1="12" x2="21" y2="12" />

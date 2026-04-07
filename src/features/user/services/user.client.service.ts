@@ -1,6 +1,5 @@
-import { apiClient } from "@/src/lib/apiClient";
 import { UserRequest } from "@/src/types/user";
-import { json } from "zod";
+import axios from "axios";
 
 export const  createUser = async (data :UserRequest ,  file? :  File)  => { 
     console.log('data in ser: ' , data)
@@ -17,7 +16,7 @@ export const  createUser = async (data :UserRequest ,  file? :  File)  => {
         }
     }
       
-    const res = await apiClient.post("/users/v1", formData);
+    const res = await axios.post("/api/proxy/users/v1", formData);
     return res.data;
 }
 
@@ -36,6 +35,6 @@ export const updateUser = async (id  : number ,  data : UserRequest , file? : Fi
         }
     }
     
-     const res = await apiClient.put(`/users/v1/${id}` , formData);
+     const res = await axios.put(`/api/proxy/users/v1/${id}` , formData);
      return res.data;
 }
