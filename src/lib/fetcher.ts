@@ -1,12 +1,12 @@
 import { cookies, headers } from "next/headers";
 import { API_URL } from "./config";
 import RefreshToken from "../features/login/services/auth.server.service";
+import { da } from "zod/locales";
 
 export default async function fetcher<T>(
     url:  string ,
      options: RequestInit= {} // ={} : tham số mặc định 
     )  :Promise<T>{ // tạo hàm này  thành bất đồng bộ, thông báo rằng kết quả kiểu T phải đợi mới lấy được 
-
     const cookieStore = await cookies();
     const accessToken = cookieStore.get('accessToken')?.value || null;
     //console.log('accessToken in fetcher: ' , accessToken);
@@ -22,6 +22,15 @@ export default async function fetcher<T>(
         }, 
         cache: 'no-store',
     })
+    
+    const data = await res.json();
+    //ném lỗi ở fetcher, service sẽ luôn nhận data sạch apiResponse từ be
+    if(!res.ok) {
+        throw new  Error(data.message);
+    }
+    return data;
+}
+
 
     
     // Đây là cách viết xử lý truyền thống , nếu access hết hạn gọi api để refresh 
@@ -46,11 +55,3 @@ export default async function fetcher<T>(
     //     return retryData;
     //    }
     // }
- 
-    const data = await res.json();
-       if(!res.ok) { 
-        console.log('loi ')
-        throw new Error(data.message || "fetch api failed !");
-    }
-    return data;
-}
