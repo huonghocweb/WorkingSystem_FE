@@ -2,7 +2,7 @@ import toast from "react-hot-toast"
 
 type ToastType  = 'success' | 'error' | 'warning' |  'info'
 
-export const showWToast = (type : ToastType , message :string) => {
+export const showToast = (type : ToastType , message :string) => {
     switch(type) { 
         case 'success' : 
         toast.success(message ,{

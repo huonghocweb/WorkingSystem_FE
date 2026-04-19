@@ -26,3 +26,10 @@ export interface UserRequest {
     email : string , 
     roleIds: string []
 }
+
+export interface UserSummaryResponse { 
+    userId : string 
+    userName : string , 
+    imageUrl : string , 
+    imagePublicId : string 
+}

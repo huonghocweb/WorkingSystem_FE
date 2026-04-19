@@ -10,7 +10,7 @@ import { RoleResponse } from "@/src/types/role";
 import { useCreateUserMutation, useUpdateUserMutation } from "@/src/hooks/useUserMutation";
 import { Axios, AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import { showWToast } from "@/src/utils/notification";
+import { showToast } from "@/src/utils/notification";
 
 
 interface Props {
@@ -77,18 +77,18 @@ const formMethods = useForm<FormValues>({
         const options = { 
             onSuccess : () =>  {
                 if(isEditMode) { 
-                        showWToast('success' , 'Update User success');
+                        showToast('success' , 'Update User success');
                     setTimeout(() => {
                         router.push("/users");
                     },2000)
                   
                 }else {
-                    showWToast('success' , 'Create User success');
+                    showToast('success' , 'Create User success');
                     setPreview(null);
                     formMethods.reset();
                 }
             }, onError : (error : AxiosError<{message : string}>) => {
-                showWToast('error',`${error ? 'Update failed'+error.response?.data.message : 'Update Failed'} `)
+                showToast('error',`${error ? 'Update failed'+error.response?.data.message : 'Update Failed'} `)
                 console.log("loi" ,  error.response);
             }
         }

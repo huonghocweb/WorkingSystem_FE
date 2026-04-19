@@ -6,7 +6,8 @@ import { NextResponse } from "next/server";
 
 //Request: đối tượng chứa toàn bộ thông tin mà Client gửi lên(headers, body, method)
 //{params:{path:string[]}}: thực chất là Route Segment Config Context(chứa thông tin về route hiện tại)
-//
+// Proxy không nên can thiệp vào error mà để cho  service xử lý .401 đã có middleware làm ,403 lỗi logic nghiệp vụ
+//proxy throw new error ở đây thì service chỉ nhận đc lỗi 500 từ nextjs không phải lỗi  mà be đã catch và gửi về
     async function handleProxyRequest(request : Request , targetPath:string , method:string){
     const cookieStore = await cookies();
     const token = cookieStore.get('accessToken')?.value;
@@ -14,8 +15,8 @@ import { NextResponse } from "next/server";
     const {search} = new URL(request.url);
     const fullURL = `${API_URL}/${targetPath}${search}`;
 
-    console.log('token in proxy: ' , token) ;
-    console.log('fullURL in proxy: ' , fullURL);
+    // console.log('token in proxy: ' , token) ;
+    // console.log('fullURL in proxy: ' , fullURL);
 
     const contentType = request.headers.get("content-type") || "";
    let body: BodyInit | undefined = undefined;
@@ -50,17 +51,10 @@ import { NextResponse } from "next/server";
     })
    }
     const res = await doFetch(token);
-    // if(res.status === 401) { 
-    //     const newAccessToken = await RefreshToken();
-    //     if(newAccessToken) { 
-    //         res = await doFetch(newAccessToken);
-    //     }
-    // }
-
+   // console.log('res in proxy ', res);
+    //data chính là ApiRes be gửi về
     const data = await res.json();
-    if(!res.ok ){
-        throw new Error(data.message || 'Co loi ')
-    }
+    // console.log('data in proxy ', data);
     return NextResponse.json(data , {status : res.status});
 }
 
@@ -68,7 +62,7 @@ type RouteParams = Promise<{path : string []}>
 
 export async function POST(req : Request, {params}: {params : RouteParams }){
      //[...path]= gom tất cả phần còn lại sau api/proxy vào mảng path
-     // user/v1 trong api/proxy/users/v1
+     // users/v1 trong api/proxy/users/v1
      const {path} = await params;
       const targetPath = path.join('/');
     return handleProxyRequest(req ,targetPath, 'POST');

@@ -1,6 +1,6 @@
 import UserListContainer from "@/src/features/user/components/UserListContainer";
 import { getUsers } from "@/src/features/user/services/user.server.service";
-import { showWToast } from "@/src/utils/notification";
+import { showToast } from "@/src/utils/notification";
 import { redirect } from 'next/navigation';
 
 interface UserPageProps { 

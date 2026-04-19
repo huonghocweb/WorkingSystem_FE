@@ -12,6 +12,8 @@ interface userListProps  {
 initialData : PageResponse<UserResponse>;
 }
 
+
+
 export default function UserList({initialData}: userListProps )  {
 
   //  console.log(initialData)

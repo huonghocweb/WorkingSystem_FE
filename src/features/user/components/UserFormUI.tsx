@@ -72,8 +72,6 @@ export default function UserTable  ({isEditMode ,formMethods, onSubmit , isPendi
                             display: "grid",
                             gridTemplateColumns: "1fr 1fr",
                             gap: "1rem",
-
-                            
                             marginBottom: "1rem",
                             }}
                         >

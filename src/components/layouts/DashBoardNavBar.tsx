@@ -1,6 +1,6 @@
 'use client'
 
-import { showWToast } from "@/src/utils/notification";
+import { showToast } from "@/src/utils/notification";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation"
@@ -8,14 +8,14 @@ import { useRouter } from "next/navigation"
 export default function DashBoardNavBar() {  
   const router = useRouter();
   const handleLogout = async() => {
-    console.log('logouthandle')
+  //  console.log('logouthandle')
       const response = await axios.post("/api/auth/logout");
-      console.log('response  lougout:' , response);
+     // console.log('response  lougout:' , response);
       if(response){
         router.push('/');
         router.refresh();
       }else  { 
-        showWToast("error", "logout failed");
+        showToast("error", "logout failed");
       }
   }
     return (
@@ -40,16 +40,16 @@ export default function DashBoardNavBar() {
                   </a>
                 </div>
                 <div className="nav-item">
-                  <a href="/projects" className="nav-link">
+                  <Link href={'/workspaces'} className="nav-link">
                     <i className="fa-solid fa-folder"></i>
-                    Projects
-                  </a>
+                    WorkSpaces
+                  </Link>
                 </div>
                 <div className="nav-item">
-                  <a href="/users" className="nav-link">
+                  <Link href="/users" className="nav-link">
                     <i className="fa-solid fa-envelope"></i>
                     Inbox
-                  </a>
+                  </Link>
                 </div>
                 <div className="nav-item">
                   <Link href="/users" className="nav-link">
