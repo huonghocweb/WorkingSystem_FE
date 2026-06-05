@@ -1,0 +1,42 @@
+/* ModalWrapper.module.css */
+.overlay {
+  position: fixed;
+  inset: 0;
+  /* Overlay tối vừa phải để làm nổi bật modal màu trung tính */
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1050;
+  backdrop-filter: blur(3px); /* Tăng độ mờ nền một chút cho sang */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contentBase {
+  /* Màu nền Off-white dịu mắt, không chói */
+  background-color: #f4f5f7;
+  color: #172b4d;
+  border-radius: 12px; /* Bo góc hiện đại hơn */
+  border: 1px solid rgba(0, 0, 0, 0.05);
+
+  /* Đổ bóng tầng cao (Elevation) để tạo chiều sâu */
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.3),
+    0 0 4px rgba(0, 0, 0, 0.1);
+
+  outline: none;
+  overflow: hidden;
+  animation: modalFadeUp 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* Các class bổ trợ độ rộng */
+.sm {
+  max-width: 500px;
+}
+.md {
+  max-width: 768px;
+}
+.lg {
+  max-width: 1024px;
+}
+.full {
+  max-width: 95vw;
+}

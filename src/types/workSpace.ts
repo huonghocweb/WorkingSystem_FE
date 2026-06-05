@@ -1,5 +1,5 @@
 import { BoardSumResponse } from "./board";
-import { WorkspaceMemberResponse } from "./workspaceMember";
+import { UserSummaryResponse } from "./user";
 
 export interface WorkSpaceRequest { 
     workspaceTitle : string , 
@@ -13,4 +13,34 @@ export interface WorkSpaceResponse {
     boards : BoardSumResponse[], 
     workspaceMember  :  WorkspaceMemberResponse[]
    
+}
+
+export interface WorkspaceMemberResponse { 
+    workspaceMemberId : WorkspaceMemberId,
+    user : UserSummaryResponse,
+    role : string 
+}
+
+export interface WorkspaceMemberRequest {
+    workspaceId : number , 
+    userId: number
+}
+
+export interface WorkspaceInvitationRequest{
+    workspaceId : number  , 
+    email  :  string 
+}
+
+export interface WorkspaceInvitationResponse {
+    invitationId : number , 
+    status : string ,
+    inviteToken : string ,
+    email  : string , 
+    workspace : WorkSpaceResponse , 
+    inviter : UserSummaryResponse 
+}
+
+export interface WorkspaceMemberId {
+    userId : number ,
+    workspaceId : number
 }

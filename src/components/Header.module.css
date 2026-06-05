@@ -66,17 +66,11 @@
   transition: all 0.3s ease 0s;
 }
 
-/* Màu chữ menu khi cuộn trang */
-.backgroundHeader .nav li a {
-  color: #1e1e1e !important;
-}
-
 .nav li a:hover,
 .nav li a.active {
   color: #f55858 !important;
 }
 
-/* Dropdown Menu cơ bản */
 .submenu {
   position: relative;
 }
@@ -92,6 +86,7 @@
   list-style: none;
   padding: 0;
   transition: all 0.3s;
+  border-radius: 18px;
 }
 
 .submenu:hover ul {
@@ -119,7 +114,6 @@
     display: none; /* Cần JS để toggle class active/show */
   }
 }
-
 
 /* Home.module.css */
 
@@ -179,7 +173,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('/assets/images/banner-bg.png');
+  background-image: url("/assets/images/banner-bg.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;

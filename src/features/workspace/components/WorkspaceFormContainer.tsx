@@ -1,11 +1,12 @@
 'use client'
 import { VisibilityResponse } from "@/src/types/visibility"
 import WorkspaceFormUI from "./WorkspaceFormUI"
-import { useCreateWorkSpaceMutation } from "@/src/hooks/useWorkSpaceMutation"
 import { showToast } from "@/src/utils/notification"
 import { WorkSpaceRequest } from "@/src/types/workSpace"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
+import ModalWrapper from "@/src/components/ModalWrapper"
+import { useCreateWorkSpace } from "@/src/hooks/useWorkSpaceMutation"
 
 interface WorkSpaceFormConProps { 
     visibilities : VisibilityResponse[]
@@ -14,7 +15,7 @@ interface WorkSpaceFormConProps {
 
 export default  function WorkspaceFormContainer ({visibilities,onClose}: WorkSpaceFormConProps)  {
     
-    const {mutate : mutateCreate , isPending : isPendingCreate } = useCreateWorkSpaceMutation();
+    const {mutate : mutateCreate , isPending : isPendingCreate } = useCreateWorkSpace();
     
     const onSubmit = (formData : WorkSpaceRequest) => {
         console.log('data form :'  , formData)
@@ -42,13 +43,18 @@ export default  function WorkspaceFormContainer ({visibilities,onClose}: WorkSpa
 
     return ( 
         <>
-            <WorkspaceFormUI 
+         <ModalWrapper 
+        onClose={onClose}
+        size="sm"
+         >
+               <WorkspaceFormUI 
             visibilities = {visibilities}
             onSubmit = {onSubmit}
             isPendingCreate = {isPendingCreate}
             formMethod = {formMethod}
              onClose={onClose}
             />
+         </ModalWrapper>
         </>
     )
 }

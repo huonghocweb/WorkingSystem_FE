@@ -1,4 +1,4 @@
-import BoardContainer from "@/src/features/board/components/BoardsContainer";
+import Boards from "@/src/features/board/components/Boards";
 import { getBoardsById } from "@/src/features/board/services/board.server.services";
 interface PageProps { 
   params : Promise<{
@@ -14,8 +14,8 @@ export default async function BoardPage ({params} : PageProps ) {
 // console.log('prams board:', param)
     return ( 
         <>
-        <BoardContainer
-          boardById = {boardById}
+        <Boards
+          initialData = {boardById}
         />
         </>
     )

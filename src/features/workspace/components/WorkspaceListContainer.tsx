@@ -7,7 +7,9 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import WorkspaceFormContainer from "./WorkspaceFormContainer";
 import { VisibilityResponse } from "@/src/types/visibility";
-import BoardFormContainer from "../../board/components/BoardFormContainer";
+import ModalWrapper from "@/src/components/ModalWrapper";
+import WorkspaceMemberModal from "./WorkspaceMember/WorkspaceMemberUI";
+import BoardForm from "../../board/components/BoardForm/BoardFormContainer";
 
 interface workspaceListProps { 
     workspacePage : PageResponse<WorkSpaceResponse>
@@ -68,7 +70,7 @@ export default  function WorkSpaceListContainer ({workspacePage, visibilities} :
 
              {/* Cần truyền thêm workspace vào BoardForm */}
              {isModalBoard &&  
-             <BoardFormContainer 
+             <BoardForm
                 workspace = {workspace}
                 onClose = {() => setIsModalBoard(false)}
              />
