@@ -27,7 +27,7 @@ export default async function UserPage({searchParams}: UserPageProps)  {
        return (
                 <div className="app-container">
                     <UserListContainer
-                    initialData={userPage?.data} />
+                    initialData={userPage} />
                </div>
     )
 }

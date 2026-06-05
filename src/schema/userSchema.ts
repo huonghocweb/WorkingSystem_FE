@@ -1,5 +1,4 @@
 import {z} from "zod"; 
-import { da } from "zod/locales";
 
 
 export const userSchema = z.object({
@@ -18,8 +17,6 @@ export const userSchema = z.object({
 export type FormValues = z.infer<typeof userSchema>; 
 
 export const mapFormToUserRequest = (data: FormValues) => { 
-    console.log('dataFormvalue  ' , data);
- 
     return { 
         ...data, 
         birthDay : new Date(data.birthDay), 

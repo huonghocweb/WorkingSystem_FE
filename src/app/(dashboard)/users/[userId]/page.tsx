@@ -19,8 +19,8 @@ export default async function Page({params}: Props) {
     return (
         <main className="main-content">
                 <UserFormContainer
-                    user={userById?.data }
-                    roles = {roles?.data}
+                    user={userById }
+                    roles = {roles}
                 />
         </main>
     );

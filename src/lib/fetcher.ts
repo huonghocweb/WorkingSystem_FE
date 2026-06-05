@@ -2,6 +2,7 @@ import { cookies, headers } from "next/headers";
 import { API_URL } from "./config";
 import RefreshToken from "../features/login/services/auth.server.service";
 import { da } from "zod/locales";
+import { ApiResponse } from "../types/pageResponse";
 
 export default async function fetcher<T>(
     url:  string ,
@@ -23,12 +24,12 @@ export default async function fetcher<T>(
         cache: 'no-store',
     })
     
-    const data = await res.json();
+    const result: ApiResponse<T> = await res.json();
     //ném lỗi ở fetcher, service sẽ luôn nhận data sạch apiResponse từ be
-    if(!res.ok) {
-        throw new  Error(data.message);
+    if(!res.ok || result.success == false) {// res.ok :status 200-299
+        throw new  Error(result.message);
     }
-    return data;
+    return result.data;
 }
 
 

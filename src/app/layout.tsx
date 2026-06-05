@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import QueryProvider from "../providers/ReactQueryProvider";
 import { Toaster } from "react-hot-toast";
+import { ModalProvider } from "./ModalProvider";
 
 export default function RootLayout({
   children,
@@ -14,9 +15,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
         <QueryProvider>
+          <ModalProvider/>
            {children}
            <Toaster 
             toastOptions={{

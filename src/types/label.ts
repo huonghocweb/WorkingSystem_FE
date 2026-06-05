@@ -3,3 +3,9 @@ export interface LabelResponse {
     labelName : string , 
     labelColor : string
 }
+
+export interface LabelRequest  {
+    labelName : string , 
+    labelColor : string, 
+    boardId :  number
+}

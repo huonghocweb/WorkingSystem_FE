@@ -1,19 +1,19 @@
 'use client'
 
 import { WorkSpaceResponse } from "@/src/types/workSpace"
-import BoardFormUI from "./BoardFormUI"
 import { useCreateBoardMutation } from "@/src/hooks/useBoardMutation"
 import { showToast } from "@/src/utils/notification"
 import { BoardRequest } from "@/src/types/board"
 import { useForm } from "react-hook-form"
-import { Axios, AxiosError } from "axios"
+import ModalWrapper from "@/src/components/ModalWrapper"
+import BoardFormUI from "./BoardFormUI"
 
 interface BoardFormProps { 
     workspace : WorkSpaceResponse | null , 
     onClose  : () => void
 }
 
-export default function BoardFormContainer ({workspace,  onClose} : BoardFormProps)  { 
+export default function BoardForm ({workspace,  onClose} : BoardFormProps)  { 
 
     const {mutate:mutateCreateBoard , isPending : isPendingCreate} = useCreateBoardMutation();
 
@@ -43,13 +43,18 @@ export default function BoardFormContainer ({workspace,  onClose} : BoardFormPro
 
     return ( 
         <>
-        <BoardFormUI
+        <ModalWrapper 
+        onClose={onClose}
+        size="sm"
+        >
+            <BoardFormUI
         workspace = {workspace}
         onClose = {onClose}
         onSubmit ={onSubmit}
         formMethod = {formMethod}
         isPendingCreate = {isPendingCreate}
         />
+        </ModalWrapper>
         </>
     )
 }
