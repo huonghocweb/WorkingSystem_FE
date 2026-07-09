@@ -14,7 +14,7 @@ export async function getUsers(
     by: by,
     order: order,
   }).toString();
-  return fetcher(`/users/v1?${query}`, {
+  return await fetcher(`/users/v1?${query}`, {
     method: "GET",
   });
 }

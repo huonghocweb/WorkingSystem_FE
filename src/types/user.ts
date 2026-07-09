@@ -43,3 +43,6 @@ export interface UserSearchResponse {
   isExisted: boolean;
   isJoined: boolean;
 }
+export interface UserRole {
+  authority: string;
+}

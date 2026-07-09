@@ -122,7 +122,12 @@ export default function CardDetail({ cardIdInitial, cardByIdInitial }: CardDetai
     createCommentReplyMutate({ commentParentId: commentParentId, commentRequest: commentRequest });
   };
   const handleDeleteComment = (commentId: number) => {
-    deleteCommentMutate(commentId);
+    const options = {
+      onError: (error: Error) => {
+        showToast("error", error.message);
+      },
+    };
+    deleteCommentMutate(commentId, options);
   };
 
   useEffect(() => {

@@ -1,6 +1,13 @@
 import axiosClient from "@/src/lib/axiosClient";
 import { ActivityLogResponse } from "@/src/types/activityLog";
-import { BoardMemberId, BoardMemberRequest, BoardRequest, BoardResponse } from "@/src/types/board";
+import {
+  BoardMemberId,
+  BoardMemberRequest,
+  BoardMemberResponse,
+  BoardRequest,
+  BoardResponse,
+  BoardRoleResponse,
+} from "@/src/types/board";
 import { LabelRequest } from "@/src/types/label";
 import { ApiResponse, PageResponse } from "@/src/types/pageResponse";
 import { PaginationState } from "@/src/types/pagination";
@@ -68,4 +75,14 @@ export const getActivityLogByBoard = async (
       order: paginationSate.order,
     },
   });
+};
+
+export const getBoardRoles = async (): Promise<ApiResponse<BoardRoleResponse>> => {
+  return await axiosClient.get(`/boards/v1/boardRoles`);
+};
+
+export const updateBoardMember = async (data: BoardMemberRequest): Promise<ApiResponse<BoardMemberResponse>> => {
+  const formData = new FormData();
+  formData.append("boardMemberRequest", new Blob([JSON.stringify(data)], { type: "application/json" }));
+  return await axiosClient.put(`/boards/v1/boardMembers`, formData);
 };
