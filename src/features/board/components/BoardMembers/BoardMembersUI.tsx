@@ -2,11 +2,7 @@
 
 import PendingPage from "@/src/components/PendingPage";
 import { WorkspaceMember } from "@/src/features/workspace/components/WorkspaceMember";
-import {
-  BoardMemberId,
-  BoardMemberRequest,
-  BoardMemberResponse,
-} from "@/src/types/board";
+import { BoardMemberId, BoardMemberRequest, BoardMemberResponse, BoardRoleResponse } from "@/src/types/board";
 import { UserSummaryResponse } from "@/src/types/user";
 import { WorkspaceMemberResponse } from "@/src/types/workSpace";
 
@@ -14,24 +10,28 @@ interface BoardMemberProps {
   isLoading: boolean;
   cardAssignees: UserSummaryResponse[];
   boardMembers: BoardMemberResponse[];
+  boardRoles: BoardRoleResponse[];
   workspaceMember: WorkspaceMemberResponse[];
   handleAddMemberToBoard: (userId: number | string) => void;
   handleDeleteMemberFromBoard: (boardMemberId: BoardMemberId) => void;
   handleAddAssigneeToCard: (assigneeId: number) => void;
   handleDeleteAssigneeFromCard: (assigneeId: number) => void;
+  handleUpdateBoardMember: (memberId: number, role: string) => void;
 }
 
 export const BoardMembersUI = ({
   isLoading,
   cardAssignees,
   boardMembers,
+  boardRoles,
   workspaceMember,
   handleAddMemberToBoard,
   handleDeleteMemberFromBoard,
   handleAddAssigneeToCard,
   handleDeleteAssigneeFromCard,
+  handleUpdateBoardMember,
 }: BoardMemberProps) => {
-  console.log(cardAssignees);
+  console.log(boardMembers);
   return (
     <>
       {isLoading && <PendingPage />}
@@ -39,23 +39,15 @@ export const BoardMembersUI = ({
         {cardAssignees.length > 0 && (
           <>
             <div className="inline-block px-2 py-2 bg-white/60 backdrop-blur-md border border-white/20 rounded-xl shadow-sm">
-              <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">
-                Card assignees
-              </span>
+              <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">Card assignees</span>
             </div>
-            <div
-              className="list-group list-group-flush border rounded-3 overflow-auto"
-              style={{ maxHeight: "350px" }}
-            >
+            <div className="list-group list-group-flush border rounded-3 overflow-auto" style={{ maxHeight: "350px" }}>
               <div
                 className="list-group list-group-flush border rounded-3 overflow-auto"
                 style={{ maxHeight: "350px" }}
               >
                 {cardAssignees?.map((assignee, index) => (
-                  <div
-                    key={index}
-                    className="list-group-item list-group-item-action py-3"
-                  >
+                  <div key={index} className="list-group-item list-group-item-action py-3">
                     <div className="d-flex align-items-center justify-content-between">
                       <div className="d-flex align-items-center gap-3">
                         <div className="position-relative">
@@ -71,22 +63,15 @@ export const BoardMembersUI = ({
                           </>
                         </div>
                         <div>
-                          <h6
-                            className="mb-0 fw-bold text-dark"
-                            style={{ fontSize: "14px" }}
-                          >
+                          <h6 className="mb-0 fw-bold text-dark" style={{ fontSize: "14px" }}>
                             {assignee.userName}
                           </h6>
-                          <small className="text-muted">
-                            {assignee?.email || ""}
-                          </small>
+                          <small className="text-muted">{assignee?.email || ""}</small>
                         </div>
                       </div>
                       <div className="dropdown">
                         <button
-                          onClick={() =>
-                            handleDeleteAssigneeFromCard(assignee.userId)
-                          }
+                          onClick={() => handleDeleteAssigneeFromCard(assignee.userId)}
                           type="button"
                           className="btn btn-outline-danger btn-xs"
                         >
@@ -102,23 +87,12 @@ export const BoardMembersUI = ({
         )}
 
         <div className="inline-block px-2 py-2 bg-white/60 backdrop-blur-md border border-white/20 rounded-xl shadow-sm">
-          <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">
-            Board Members
-          </span>
+          <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">Board Members</span>
         </div>
-        <div
-          className="list-group list-group-flush border rounded-3 overflow-auto"
-          style={{ maxHeight: "350px" }}
-        >
-          <div
-            className="list-group list-group-flush border rounded-3 overflow-auto"
-            style={{ maxHeight: "350px" }}
-          >
+        <div className="list-group list-group-flush border rounded-3 overflow-auto" style={{ maxHeight: "350px" }}>
+          <div className="list-group list-group-flush border rounded-3 overflow-auto" style={{ maxHeight: "350px" }}>
             {boardMembers?.map((boardMember, index) => (
-              <div
-                key={index}
-                className="list-group-item list-group-item-action py-3"
-              >
+              <div key={index} className="list-group-item list-group-item-action py-3">
                 <div className="d-flex align-items-center justify-content-between">
                   <div className="d-flex align-items-center gap-3">
                     <div className="position-relative">
@@ -134,28 +108,26 @@ export const BoardMembersUI = ({
                       </>
                     </div>
                     <div>
-                      <h6
-                        className="mb-0 fw-bold text-dark"
-                        style={{ fontSize: "14px" }}
-                      >
+                      <h6 className="mb-0 fw-bold text-dark" style={{ fontSize: "14px" }}>
                         {boardMember.user.userName}
                       </h6>
-                      <small className="text-muted">
-                        {boardMember.user?.email || ""}
-                      </small>
+                      <small className="text-muted">{boardMember.user?.email || ""}</small>
                     </div>
                   </div>
                   <div className="btn-group dropdown">
-                    <button
-                      className="btn btn-xs btn-light border dropdown-toggle"
-                      type="button"
+                    <select
+                      className="form-select form-select-sm"
+                      value={boardMember.role}
+                      onChange={(e) => handleUpdateBoardMember(boardMember.user.userId, e.target.value)}
                     >
-                      {boardMember.role}
-                    </button>
+                      {boardRoles?.map((role) => (
+                        <option key={role.code} value={role.code}>
+                          {role.displayName}
+                        </option>
+                      ))}
+                    </select>
                     <button
-                      onClick={() =>
-                        handleDeleteMemberFromBoard(boardMember.boardMemberId)
-                      }
+                      onClick={() => handleDeleteMemberFromBoard(boardMember.boardMemberId)}
                       type="button"
                       className="btn btn-xs btn-outline-danger"
                     >
@@ -164,9 +136,7 @@ export const BoardMembersUI = ({
                     <button
                       type="button"
                       className="btn btn-xs btn-outline-success"
-                      onClick={() =>
-                        handleAddAssigneeToCard(boardMember.user.userId)
-                      }
+                      onClick={() => handleAddAssigneeToCard(boardMember.user.userId)}
                     >
                       <i className="fa-solid fa-user-plus"></i>
                     </button>
@@ -178,23 +148,12 @@ export const BoardMembersUI = ({
         </div>
 
         <div className="inline-block px-2 py-2 bg-white/60 backdrop-blur-md border border-white/20 rounded-xl shadow-sm">
-          <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">
-            Workspace Members
-          </span>
+          <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">Workspace Members</span>
         </div>
-        <div
-          className="list-group list-group-flush border rounded-3 overflow-auto"
-          style={{ maxHeight: "350px" }}
-        >
-          <div
-            className="list-group list-group-flush border rounded-3 overflow-auto"
-            style={{ maxHeight: "350px" }}
-          >
+        <div className="list-group list-group-flush border rounded-3 overflow-auto" style={{ maxHeight: "350px" }}>
+          <div className="list-group list-group-flush border rounded-3 overflow-auto" style={{ maxHeight: "350px" }}>
             {workspaceMember?.map((workspaceMember, index) => (
-              <div
-                key={index}
-                className="list-group-item list-group-item-action py-3"
-              >
+              <div key={index} className="list-group-item list-group-item-action py-3">
                 <div className="d-flex align-items-center justify-content-between">
                   <div className="d-flex align-items-center gap-3">
                     <div className="position-relative">
@@ -210,28 +169,18 @@ export const BoardMembersUI = ({
                       </>
                     </div>
                     <div>
-                      <h6
-                        className="mb-0 fw-bold text-dark"
-                        style={{ fontSize: "14px" }}
-                      >
+                      <h6 className="mb-0 fw-bold text-dark" style={{ fontSize: "14px" }}>
                         {workspaceMember.user.userName}
                       </h6>
-                      <small className="text-muted">
-                        {workspaceMember.user?.email || ""}
-                      </small>
+                      <small className="text-muted">{workspaceMember.user?.email || ""}</small>
                     </div>
                   </div>
                   <div className="dropdown">
-                    <button
-                      className="btn btn-xs btn-light border dropdown-toggle"
-                      type="button"
-                    >
+                    <button className="btn btn-xs btn-light border" type="button">
                       {workspaceMember.role}
                     </button>
                     <button
-                      onClick={() =>
-                        handleAddMemberToBoard(workspaceMember.user.userId)
-                      }
+                      onClick={() => handleAddMemberToBoard(workspaceMember.user.userId)}
                       type="button"
                       className="btn btn-success btn-xs"
                     >
@@ -243,9 +192,7 @@ export const BoardMembersUI = ({
             ))}
             {workspaceMember?.length === 0 ||
               (boardMembers?.length === 0 && (
-                <div className="p-4 text-center text-muted">
-                  No members or pending invitations.
-                </div>
+                <div className="p-4 text-center text-muted">No members or pending invitations.</div>
               ))}
           </div>
         </div>

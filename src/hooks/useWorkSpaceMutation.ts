@@ -1,9 +1,4 @@
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { QueryClient, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   WorkspaceInvitationRequest,
   WorkspaceMemberId,
@@ -15,7 +10,9 @@ import {
   createWorkspace,
   deleteWorkspaceInvitation,
   deleteWorkspaceMember,
+  getWorkspaceRoles,
   inviteUserByEmail,
+  updateWorkspaceMember,
 } from "../features/workspace/services/workspace.client.service";
 import { AxiosError } from "axios";
 
@@ -46,7 +43,17 @@ export const useInviteUserToWorkspace = () => {
     },
   });
 };
-
+export const useUpdateWorkspaceMember = () => {
+  const query = useQueryClient();
+  return useMutation({
+    mutationFn: (data: WorkspaceMemberRequest) => {
+      return updateWorkspaceMember(data);
+    },
+    onSuccess: () => {
+      query.invalidateQueries({ queryKey: ["workspace-members"] });
+    },
+  });
+};
 export const useInviteEmailToWorkspace = () => {
   const queryClient = useQueryClient();
   return useMutation({

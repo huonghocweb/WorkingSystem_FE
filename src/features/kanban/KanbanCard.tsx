@@ -5,6 +5,7 @@ import { CardSumResponse } from "@/src/types/card";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import Link from "next/link";
+import { showToast } from "@/src/utils/notification";
 
 interface KanbanCardProps {
   card: CardSumResponse;
@@ -24,7 +25,12 @@ export const KanbanCard = ({ card, workspaceId, boardId }: KanbanCardProps) => {
     zIndex: isDragging ? 100 : "auto",
   };
   const handleArchiveCard = (cardId: number) => {
-    archiveCardMutate(cardId);
+    const options = {
+      onError: (error: Error) => {
+        showToast("error", error.message);
+      },
+    };
+    archiveCardMutate(cardId, options);
   };
   return (
     <div

@@ -4,9 +4,13 @@ import ModalWrapper from "@/src/components/ModalWrapper";
 import { useModal } from "@/src/store/useModalStore";
 import { BoardMembersUI } from "./BoardMembersUI";
 import { useQuery } from "@tanstack/react-query";
-import { getBoardMemberNotInCard, getBoardMembersByBoardId } from "../../services/board.client.services";
+import { getBoardMemberNotInCard, getBoardMembersByBoardId, getBoardRoles } from "../../services/board.client.services";
 import { getWorkspaceMemberNotInBoard } from "@/src/features/workspace/services/workspace.client.service";
-import { useAddMemberToBoardMutation, useDeleteMemberFromBoardMutation } from "@/src/hooks/useBoardMutation";
+import {
+  useAddMemberToBoardMutation,
+  useDeleteMemberFromBoardMutation,
+  useUpdateBoardMember,
+} from "@/src/hooks/useBoardMutation";
 import { showToast } from "@/src/utils/notification";
 import { BoardMemberId, BoardMemberRequest } from "@/src/types/board";
 import { useAddAssigneeToCardMutation, useDeleteAssigneeFromCard } from "@/src/hooks/useCardMutations";
@@ -20,7 +24,7 @@ export const BoardMember = () => {
   const { mutate: deleteMemberFromBoard, isPending: isDeleteMemFromBoard } = useDeleteMemberFromBoardMutation();
   const { mutate: addAssigneeToCard, isPending: isAddAssigneeToCard } = useAddAssigneeToCardMutation();
   const { mutate: deleteAssigneeFromCard, isPending: isDeleteAssgineeFromCard } = useDeleteAssigneeFromCard();
-
+  const { mutate: updateBoardMember, isPending: isUpdateBoardMember } = useUpdateBoardMember();
   const { data: cardAssignees, isPending: isCardAssignees } = useQuery({
     queryKey: ["card-assignees"],
     queryFn: async () => {
@@ -53,6 +57,16 @@ export const BoardMember = () => {
       return res.data;
     },
     initialData: [],
+    enabled: isOpenModal && !!data?.workspaceId,
+    staleTime: 0,
+  });
+
+  const { data: boardRoles, isPending: isBoardRoles } = useQuery({
+    queryKey: ["boardRoles"],
+    queryFn: async () => {
+      const res = await getBoardRoles();
+      return res.data || [];
+    },
     enabled: isOpenModal && !!data?.workspaceId,
     staleTime: 0,
   });
@@ -95,6 +109,14 @@ export const BoardMember = () => {
     };
     addAssigneeToCard({ cardId: data?.cardId, assigneeId: assigneeId }, options);
   };
+  const handleUpdateBoardMember = (memberId: number, role: string) => {
+    const boardMemberRequest: BoardMemberRequest = {
+      userId: memberId,
+      boardId: data?.boardId,
+      role: role,
+    };
+    updateBoardMember(boardMemberRequest);
+  };
   const handleDeleteAssigneeFromCard = (assigneeId: number) => {
     deleteAssigneeFromCard({ cardId: data?.cardId, assigneeId: assigneeId });
   };
@@ -108,11 +130,13 @@ export const BoardMember = () => {
             }
             cardAssignees={cardAssignees}
             boardMembers={boardMembers}
+            boardRoles={boardRoles}
             workspaceMember={workspaceMember}
             handleAddMemberToBoard={handleAddMemberToBoard}
             handleDeleteMemberFromBoard={handleDeleteMemberFromBoard}
             handleAddAssigneeToCard={handleAddAssigneeToCard}
             handleDeleteAssigneeFromCard={handleDeleteAssigneeFromCard}
+            handleUpdateBoardMember={handleUpdateBoardMember}
           />
         </ModalWrapper>
       )}

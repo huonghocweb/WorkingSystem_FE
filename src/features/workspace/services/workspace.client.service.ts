@@ -25,23 +25,15 @@ export const getWorkspaceById = async (workspaceId: number) => {
 
 export const createWorkspace = async (data: WorkSpaceRequest) => {
   const formData = new FormData();
-  formData.append(
-    "workspaceRequest",
-    new Blob([JSON.stringify(data)], { type: "application/json" }),
-  );
+  formData.append("workspaceRequest", new Blob([JSON.stringify(data)], { type: "application/json" }));
   return axiosClient.post(`/workspaces/v1`, formData);
 };
 
 export const getWorkspaceMembersByWorkspaceId = async (workspaceId: number) => {
   return axiosClient.get(`/workspaces/v1/workspaceMembers/${workspaceId}`);
 };
-export const getWorkspaceMemberNotInBoard = async (
-  workspaceId: number,
-  boardId: number,
-) => {
-  return axiosClient.get(
-    `/workspaces/v1/workspaceMembers/${workspaceId}/${boardId}`,
-  );
+export const getWorkspaceMemberNotInBoard = async (workspaceId: number, boardId: number) => {
+  return axiosClient.get(`/workspaces/v1/workspaceMembers/${workspaceId}/${boardId}`);
 };
 export const getUserToInvite = async (keyword: string, workspaceId: number) => {
   const query = new URLSearchParams({
@@ -53,40 +45,35 @@ export const getUserToInvite = async (keyword: string, workspaceId: number) => {
 
 export const addUserToWorkspace = async (data: WorkspaceMemberRequest) => {
   const formdata = new FormData();
-  formdata.append(
-    "workspaceMemberRequest",
-    new Blob([JSON.stringify(data)], { type: "application/json" }),
-  );
+  formdata.append("workspaceMemberRequest", new Blob([JSON.stringify(data)], { type: "application/json" }));
   return axiosClient.post(`/workspaces/v1/invitation`, formdata);
+};
+export const updateWorkspaceMember = async (data: WorkspaceMemberRequest) => {
+  const formData = new FormData();
+  formData.append("workspaceMemberRequest", new Blob([JSON.stringify(data)], { type: "application/json" }));
+  return axiosClient.put(`/workspaces/v1/invitation`, formData);
 };
 
 export const inviteUserByEmail = async (data: WorkspaceInvitationRequest) => {
   const formData = new FormData();
-  formData.append(
-    "workspaceInvitationRequest",
-    new Blob([JSON.stringify(data)], { type: "application/json" }),
-  );
+  formData.append("workspaceInvitationRequest", new Blob([JSON.stringify(data)], { type: "application/json" }));
   return axiosClient.post(`/workspaces/v1/invitation/addByMail`, formData);
 };
 
-export const getWorkspaceInvitationsByWorkspaceId = async (
-  workspaceId: number,
-) => {
+export const getWorkspaceInvitationsByWorkspaceId = async (workspaceId: number) => {
   return axiosClient.get(`/workspaces/v1/workspaceInvitations/${workspaceId}`);
 };
 
-export const deleteWorkspaceMember = async (
-  workspaceMemberId: WorkspaceMemberId,
-) => {
+export const deleteWorkspaceMember = async (workspaceMemberId: WorkspaceMemberId) => {
   return axiosClient.delete(
     `/workspaces/v1/workspaceMembers/${workspaceMemberId.workspaceId}/${workspaceMemberId.userId}`,
   );
 };
 
-export const deleteWorkspaceInvitation = async (
-  workspaceInvitationId: number,
-) => {
-  return axiosClient.delete(
-    `/workspaces/v1/workspaceInvitations/${workspaceInvitationId}`,
-  );
+export const deleteWorkspaceInvitation = async (workspaceInvitationId: number) => {
+  return axiosClient.delete(`/workspaces/v1/workspaceInvitations/${workspaceInvitationId}`);
+};
+
+export const getWorkspaceRoles = async () => {
+  return axiosClient.get(`/workspaces/v1/workspaceRoles`);
 };

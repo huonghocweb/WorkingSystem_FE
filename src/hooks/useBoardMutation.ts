@@ -7,7 +7,9 @@ import {
   deleteBoardLabel,
   deleteMemberFromBoard,
   getActivityLogByBoard,
+  getBoardRoles,
   updateBoard,
+  updateBoardMember,
 } from "../features/board/services/board.client.services";
 import { LabelRequest } from "../types/label";
 import { showToast } from "../utils/notification";
@@ -112,6 +114,30 @@ export const useGetActivityLogByBoard = () => {
     },
     onSuccess: () => {
       query.invalidateQueries({ queryKey: ["boardById"] });
+    },
+  });
+};
+
+export const useGetBoardRoles = () => {
+  const query = useQueryClient();
+  return useMutation({
+    mutationFn: () => {
+      return getBoardRoles();
+    },
+    onSuccess: () => {
+      query.invalidateQueries({ queryKey: [""] });
+    },
+  });
+};
+
+export const useUpdateBoardMember = () => {
+  const query = useQueryClient();
+  return useMutation({
+    mutationFn: (data: BoardMemberRequest) => {
+      return updateBoardMember(data);
+    },
+    onSuccess: () => {
+      query.invalidateQueries({ queryKey: ["board-members"] });
     },
   });
 };

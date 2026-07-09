@@ -37,4 +37,10 @@ export interface BoardMemberResponse {
 export interface BoardMemberRequest {
   boardId: number;
   userId: number;
+  role: string;
+}
+
+export interface BoardRoleResponse {
+  code: string;
+  displayName: string;
 }

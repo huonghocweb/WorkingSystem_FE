@@ -10,22 +10,16 @@ interface pageParams {
   order: string;
 }
 
-export async function getWorkspacesByUserId(
-  params: pageParams,
-  userId: number,
-): Promise<PageResponse<WorkSpaceResponse>> {
+export async function getWorkspacesByUserId(params: pageParams): Promise<PageResponse<WorkSpaceResponse>> {
   const query = new URLSearchParams({
     page: String(params.page),
     size: String(params.size),
     by: params.by,
     order: params.order,
   }).toString();
-  const result = await fetcher<PageResponse<WorkSpaceResponse>>(
-    `/workspaces/v1/user/${userId}?${query}`,
-    {
-      method: "GET",
-    },
-  );
+  const result = await fetcher<PageResponse<WorkSpaceResponse>>(`/workspaces/v1/user?${query}`, {
+    method: "GET",
+  });
   //  console.log('result in fetch service' , result);
   return result;
 }
