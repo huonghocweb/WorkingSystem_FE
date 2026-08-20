@@ -11,7 +11,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     if (userInfoCookie) {
       try {
         const userData = JSON.parse(userInfoCookie);
-        console.log("userLogin from cookie", userData);
+        // console.log("userLogin from cookie", userData);
         setUser(userData);
       } catch (error) {
         console.error("Cookie userLogin has some error", error);

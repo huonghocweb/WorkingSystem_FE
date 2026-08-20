@@ -50,7 +50,7 @@ export const ActivityLogsUI = ({ activityLogs = [], isPending, paginationControl
                   </>
                 </div>
                 <div className="activity-meta small text-muted d-flex align-items-center mt-1">
-                  <a href="#" className="text-muted text-decoration-none me-2 shadow-none">
+                  <a className="fw-bold text-muted text-decoration-none me-2 shadow-none">
                     {new Date(activityLog.createAt).toLocaleTimeString("vi-VN")} -{" "}
                     {new Date(activityLog.createAt).toLocaleDateString("vi-VN")}
                   </a>

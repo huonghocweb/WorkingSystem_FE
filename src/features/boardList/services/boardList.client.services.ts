@@ -17,3 +17,7 @@ export const updateBoardList = (boardListId: number, data: BoardListRequest) => 
 export const deleteBoardList = (boardListId: number) => {
   return axiosClient.delete(`/boardLists/v1/${boardListId}`);
 };
+
+export const getBoardListTypeCode = () => {
+  return axiosClient.get(`/boardLists/v1/boardListTypeCode`);
+};

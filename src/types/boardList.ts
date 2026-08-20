@@ -10,4 +10,5 @@ export interface BoardListResponse {
 export interface BoardListRequest {
   boardListTitle: string;
   boardId: number;
+  boardListTypeId: number;
 }

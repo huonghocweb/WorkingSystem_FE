@@ -1,11 +1,13 @@
 import { apiClient } from "@/src/lib/apiClient";
 import axiosClient from "@/src/lib/axiosClient";
+import { ApiResponse } from "@/src/types/pageResponse";
 import { UserSearchResponse } from "@/src/types/user";
 import {
   WorkspaceInvitationRequest,
   WorkspaceMemberId,
   WorkspaceMemberRequest,
   WorkSpaceRequest,
+  WorkSpaceResponse,
 } from "@/src/types/workSpace";
 import axios from "axios";
 

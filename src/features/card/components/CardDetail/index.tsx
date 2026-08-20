@@ -52,7 +52,7 @@ export default function CardDetail({ cardIdInitial, cardByIdInitial }: CardDetai
       cardTitle: cardById?.cardTitle || "",
       cardDescription: cardById?.cardDescription || "",
       startDate: cardById?.startDate?.split("T")[0] || "",
-      endDate: cardById?.endDate?.split("T")[0] || "",
+      dueDate: cardById?.dueDate?.split("T")[0] || "",
       labelIds: cardById?.labels?.map((lb) => String(lb.lableId)) || [],
       assigneeIds: cardById?.users?.map((user) => String(user.userId)) || [],
     },
@@ -136,7 +136,7 @@ export default function CardDetail({ cardIdInitial, cardByIdInitial }: CardDetai
         cardTitle: cardById.cardTitle,
         cardDescription: cardById.cardDescription,
         startDate: cardById.startDate?.split("T")[0],
-        endDate: cardById.endDate?.split("T")[0],
+        dueDate: cardById.dueDate?.split("T")[0],
         labelIds: cardById.labels?.map((lb) => String(lb.labelId)) || [],
         assigneeIds: cardById.users?.map((user) => String(user.userId)) || [],
       });

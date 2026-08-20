@@ -30,3 +30,8 @@ export const getVisibilities = async (): Promise<VisibilityResponse[]> => {
   });
   return result;
 };
+
+export const getWorkspaceOwnedByUser = async (workspaceId: number): Promise<WorkSpaceResponse[]> => {
+  const result = await fetcher<WorkSpaceResponse[]>(`/workspaces/v1/owned-by/${workspaceId}`, { method: "GET" });
+  return result;
+};
