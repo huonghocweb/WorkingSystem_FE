@@ -51,6 +51,12 @@ export default function BoardsUI({ boardById, formMethod, onSubmit, isPendingUpd
             </form>
             <div className="header-right d-flex align-items-center gap-2">
               <button
+                onClick={() => onOpen("boardActivity", { boardId: boardById.boardId })}
+                className="btn btn-outline-primary px-3"
+              >
+                ActivityLogs
+              </button>
+              <button
                 onClick={() => onOpen("boardLabel", { boardId: boardById.boardId })}
                 className="btn btn-outline-primary px-3"
               >

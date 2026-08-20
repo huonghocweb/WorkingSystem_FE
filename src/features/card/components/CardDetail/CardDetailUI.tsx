@@ -113,8 +113,8 @@ export default function CardDetailUI({
               <h3 className="text-uppercase small fw-bold text-secondary mb-2" style={{ fontSize: "12px" }}>
                 DueDate
               </h3>
-              <input className="form-input" type="date" {...register("endDate")} />
-              {errors.endDate && <span className="error-message">{errors.endDate.message}</span>}
+              <input className="form-input" type="date" {...register("dueDate")} />
+              {errors.dueDate && <span className="error-message">{errors.dueDate.message}</span>}
             </div>
           </div>
           <div className={styles.contentSection}>

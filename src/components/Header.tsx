@@ -1,8 +1,11 @@
+"use client";
 import Link from "next/link";
 import style from "./Header.module.css";
 import { useUserStore } from "../store/userStore";
 
 export default function Header() {
+  const user = useUserStore((state) => state.user);
+  console.log("userIn header", user);
   return (
     // Bạn có thể thêm class backgroundHeader vào đây khi cuộn trang (dùng JS)
     <header className={`${style.headerArea} ${style.headerSticky}`}>
@@ -21,7 +24,7 @@ export default function Header() {
                   </a>
                 </li>
                 <li>
-                  <Link href={"/dashboard"}>DashBoard</Link>
+                  <Link href={`/dashboard/workspaces/${user?.userId}`}>DashBoard</Link>
                 </li>
                 <li>
                   <Link href={"/users"}>Users</Link>

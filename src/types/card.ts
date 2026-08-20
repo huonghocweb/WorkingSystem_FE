@@ -18,7 +18,7 @@ export interface CardResponse {
   cardTitle: string;
   cardDescription: string;
   startDate: string;
-  endDate: string;
+  dueDate: string;
   orderIndex: number;
   deleteAt: string;
   labels: LabelResponse[];
@@ -32,7 +32,7 @@ export interface CardRequest {
   cardTitle: string;
   cardDescription: string;
   startDate: Date;
-  endDate: Date;
+  dueDate: Date;
   orderIndex: number;
   boardListId: number;
 }

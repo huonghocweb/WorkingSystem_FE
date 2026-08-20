@@ -9,9 +9,7 @@ import { useRouter } from "next/navigation";
 export default function DashBoardNavBar() {
   const router = useRouter();
   const handleLogout = async () => {
-    //  console.log('logouthandle')
     const response = await axios.post("/api/auth/logout");
-    // console.log('response  lougout:' , response);
     if (response) {
       router.push("/");
       router.refresh();
@@ -20,27 +18,27 @@ export default function DashBoardNavBar() {
     }
   };
   const user = useUserStore((state) => state.user);
-  console.log(user);
+  //  console.log(user);
   return (
     <>
       {/* Top Navigation */}
       <nav className="top-nav">
         <div className="nav-container">
           <div className="nav-left">
-            <a href="/dashboard" className="logo">
+            <Link href={`/dashboard/workspaces/${user?.userId}`} className="logo">
               <div className="logo-icon">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
                 </svg>
               </div>
               DayNight
-            </a>
+            </Link>
             <div className="nav-menu">
               <div className="nav-item">
-                <a href="/dashboard" className="nav-link active">
+                <Link href={`/dashboard/workspaces/${user?.userId}`} className="nav-link active">
                   <i className="fa-solid fa-table"></i>
                   Dashboard
-                </a>
+                </Link>
               </div>
               <div className="nav-item">
                 <Link href={"/workspaces"} className="nav-link">
